@@ -4,6 +4,17 @@ from datetime import datetime
 import ffmpeg
 import os
 
+try :
+    
+    # Add ffmpeg to the PATH
+    ffmpegPath= os.path.dirname(os.path.realpath(__file__))+"\\ffmpeg\\bin"
+    print(ffmpegPath)
+    os.environ['PATH'] = ffmpegPath
+except Exception as error:
+     print("An exception occurred:", error)
+
+
+
 print(os.getcwd())
 
 def concatenate_videos():
@@ -15,7 +26,11 @@ def concatenate_videos():
     codec = None
     for file_path in file_paths:
         # Use ffmpeg to get codec information of the videos
-        probe = ffmpeg.probe(file_path)
+        try:
+            probe = ffmpeg.probe(file_path)
+        except Exception as error:
+            print("An exception occurred:", error)
+            return 
         video_info = next(stream for stream in probe['streams'] if stream['codec_type'] == 'video')
         if codec is None:
             codec = video_info['codec_name']
@@ -56,7 +71,7 @@ def concatenate_videos():
     os.remove(concat_file_path)
  
 def add_files(event=None):
-    files = filedialog.askopenfilenames(filetypes=[("Video files", "*.mp4;*.avi;*.mov;*mkv")])
+    files = filedialog.askopenfilenames(filetypes=[("Video files", "*.MTS;*.mp4;*.avi;*.mov;*mkv")])
     for file in files:
         file_list.insert(tk.END, file)
  
