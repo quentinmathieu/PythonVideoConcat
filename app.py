@@ -3,6 +3,8 @@ from tkinter import filedialog
 from datetime import datetime
 import ffmpeg
 import os
+import threading
+
 
 try :
     
@@ -18,7 +20,10 @@ except Exception as error:
 print(os.getcwd())
 
 def concatenate_videos():
+    
     file_paths = file_list.get(0, tk.END)
+    add_button.pack_forget()
+    concat_button.pack_forget()
     if len(file_paths) < 2:
         status_label.config(text="Select at least 2 videos to concatenate.")
         return
@@ -69,6 +74,7 @@ def concatenate_videos():
  
     # Clean up temporary files
     os.remove(concat_file_path)
+    print("Concatenation complete!")
  
 def add_files(event=None):
     files = filedialog.askopenfilenames(filetypes=[("Video files", "*.MTS;*.mp4;*.avi;*.mov;*mkv")])
@@ -90,7 +96,7 @@ file_list.pack()
 add_button = tk.Button(root, text="Add Files", command=add_files)
 add_button.pack()
  
-concat_button = tk.Button(root, text="Concatenate Videos", command=concatenate_videos)
+concat_button = tk.Button(root, text="Concatenate Videos", command=threading.Thread(target=concatenate_videos).start)
 concat_button.pack()
  
 # Create status label
