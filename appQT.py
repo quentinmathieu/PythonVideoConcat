@@ -2,9 +2,10 @@ from PyQt6.QtWidgets import QMainWindow, QApplication
 from PyQt6 import uic
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
-import os, sys, pyperclip, json,html
+import os, sys, time
 from datetime import datetime
 import ffmpeg
+import psutil
 
 class ConcatenateThread(QThread):
         finished = pyqtSignal(str)
@@ -20,16 +21,15 @@ class ConcatenateThread(QThread):
             try:
                 ffmpeg.input(self.concat_file_path, format='concat', safe=0).output(self.output_file, c='copy').run()
                 self.myGui.videoInfos.setText("Videos concatenated and saved as \n"+self.output_file.replace('\\',"/"))
-                # output_message = "Concatenation completed successfully."
-                print(self.concat_file_path)
+
                 # Clean up temporary files
                 os.remove(self.concat_file_path)
                 self.myGui.setStatusInterface(True)
-                print("Concatenation complete!")
                 self.finished.emit("ok")
             except Exception as e:
                 self.error.emit(str(e))
 
+  
 
 class MyGUI(QMainWindow):
 
@@ -46,11 +46,9 @@ class MyGUI(QMainWindow):
         self.concatBtn.clicked.connect(lambda: self.on_click())
         self.compressBtn.clicked.connect(lambda: self.crompressVideos())
         self.delListBtn.clicked.connect(lambda: self.deleteFromList())
+        
+        
 
-
-
-
-    
 
     def on_click(self):
         self.videoInfos.setText("Prosessing...")
@@ -92,23 +90,30 @@ class MyGUI(QMainWindow):
 
         # Generate the concat demuxer file
         concat_content = [f"file '{file_path}'" for file_path in filtered_files]
-        concat_file_path =     output_file = os.path.join(last_file_dir, "concat.txt") 
-
+        concat_file_path = os.path.join(last_file_dir, "concat.txt") 
+        
         with open(concat_file_path, "w") as concat_file:
             concat_file.write('\n'.join(concat_content))
 
-
+        
         # Get current timestamp to create output filename to the same directory as the last input file
         current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         output_file = os.path.join(last_file_dir, f"output_{current_time}.mp4") 
 
         self.concatThread = ConcatenateThread(concat_file_path, output_file, self)
-        # self.concatThread.finished.connect(self.concatenationFinished)
-        # self.concatThread.error.connect(self.concatenationError)
+        self.stopBtn.clicked.connect(lambda: self.stop(output_file, concat_file_path))
         self.concatThread.start()
 
-       
+    def stop(self, output_file, concat_file_path):
+        PROCNAME = "ffmpeg.exe"
+
         
+        for proc in psutil.process_iter():
+            # check whether the process name matches
+            if proc.name() == PROCNAME:
+                proc.kill()
+        self.setStatusInterface(True)
+        self.videoInfos.setText("CANCELED")
 
 
     def dragEnterEvent(self, event):
@@ -136,6 +141,7 @@ class MyGUI(QMainWindow):
 
 
     def setStatusInterface(self, status):
+        invers = False if status else True
         self.clearBtn.setEnabled(status)
         self.concatBtn.setEnabled(status)
         self.compressBtn.setEnabled(status)
@@ -143,6 +149,7 @@ class MyGUI(QMainWindow):
         self.compressSlider.setEnabled(status)
         self.filesList.setEnabled(status)
         self.dropArea.setEnabled(status)
+        self.stopBtn.setEnabled(invers)
 
         self.setAcceptDrops(status)
 
@@ -157,7 +164,7 @@ def main():
         print(ffmpegPath)
         os.environ['PATH'] = ffmpegPath
     except Exception as error:
-        print("An exception occurred:", error)
+        print("An exception occurred:"+ str(error))
     app = QApplication(sys.argv)
     window = MyGUI()
     app.exec()
