@@ -78,7 +78,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>4</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -142,7 +142,66 @@
         </widget>
        </widget>
       </widget>
+      <widget class="QWidget" name="cdaTab">
+       <attribute name="title">
+        <string>CDA</string>
+       </attribute>
+       <widget class="QScrollArea" name="RanScrollArea_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>797</width>
+          <height>680</height>
+         </rect>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>795</width>
+           <height>678</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="cdaRanTab">
+       <attribute name="title">
+        <string>CDA-RAN</string>
+       </attribute>
+       <widget class="QScrollArea" name="RanScrollArea_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>797</width>
+          <height>680</height>
+         </rect>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents_6">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>795</width>
+           <height>678</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
       <widget class="QWidget" name="tab">
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <attribute name="title">
         <string>Video</string>
        </attribute>
@@ -330,41 +389,6 @@ Qlabel:disabled{color:#636363}</string>
            <property name="horizontalSpacing">
             <number>30</number>
            </property>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="compressBtn">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>80</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Victor Mono SemiBold</family>
-               <pointsize>18</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton{background-color: qlineargradient(x1: 0, y1:0, x2: 1, y2:1, stop: 0 #206a95, stop: 1 #153754); border-radius:15;color: white; font-weight:600;padding :10px}
-
-QPushButton:disabled {
-background-color:#989898;
-color:#636363
-}</string>
-             </property>
-             <property name="text">
-              <string>CONCAT +/ COMPRESS</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="QPushButton" name="concatBtn">
              <property name="enabled">
@@ -400,29 +424,38 @@ color:#636363
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QSlider" name="compressSlider">
+           <item row="0" column="1">
+            <widget class="QPushButton" name="compressBtn">
              <property name="enabled">
               <bool>true</bool>
              </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Victor Mono SemiBold</family>
+               <pointsize>18</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider::handle:horizontal {background: qlineargradient(x1: 0, y1:0, x2: 1, y2:1, stop: 0 #206a95, stop: 1 #153754);}
+              <string notr="true">QPushButton{background-color: qlineargradient(x1: 0, y1:0, x2: 1, y2:1, stop: 0 #206a95, stop: 1 #153754); border-radius:15;color: white; font-weight:600;padding :10px}
 
-QSlider::handle:horizontal:disabled{
-	background: #636363
+QPushButton:disabled {
+background-color:#989898;
+color:#636363
 }</string>
              </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+             <property name="text">
+              <string>CONCAT +/ COMPRESS</string>
              </property>
             </widget>
            </item>
@@ -461,6 +494,65 @@ color:#636363
              </property>
             </widget>
            </item>
+           <item row="1" column="1">
+            <widget class="QSlider" name="compressSlider">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QSlider::handle:horizontal {background: qlineargradient(x1: 0, y1:0, x2: 1, y2:1, stop: 0 #206a95, stop: 1 #153754);}
+
+QSlider::handle:horizontal:disabled{
+	background: #636363
+}</string>
+             </property>
+             <property name="minimum">
+              <number>20</number>
+             </property>
+             <property name="maximum">
+              <number>40</number>
+             </property>
+             <property name="value">
+              <number>30</number>
+             </property>
+             <property name="sliderPosition">
+              <number>30</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Best Quality</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Lightweigth</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </item>
          <item>
@@ -483,7 +575,7 @@ color:#636363
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">color:#206a95</string>
+            <string notr="true">color:#206a95;margin:0 20 0 0</string>
            </property>
            <property name="text">
             <string/>
@@ -497,6 +589,57 @@ color:#636363
           </widget>
          </item>
         </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="editTab">
+       <attribute name="title">
+        <string>EDIT</string>
+       </attribute>
+       <widget class="QScrollArea" name="RanScrollArea_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>797</width>
+          <height>680</height>
+         </rect>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents_7">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>795</width>
+           <height>678</height>
+          </rect>
+         </property>
+         <widget class="QTabWidget" name="tabWidgetEdit">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>791</width>
+            <height>631</height>
+           </rect>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="categoriesTab">
+           <attribute name="title">
+            <string>Categories</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="coursesTab">
+           <attribute name="title">
+            <string>Courses</string>
+           </attribute>
+          </widget>
+         </widget>
+        </widget>
        </widget>
       </widget>
      </widget>
