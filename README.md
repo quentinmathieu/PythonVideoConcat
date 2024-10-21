@@ -6,7 +6,7 @@ Python video concat / compress is an app that concat (very fast) videos. You can
 
 ### Prerequisites :
 
-* Install the latest version of [Python](https://java.com/](https://www.python.org/downloads/).
+* Install the latest version of [Python](https://www.python.org/downloads/).
 
 Install the following packages before runing the app:
 
